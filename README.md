@@ -1,4 +1,4 @@
-# Shopify ORM Metaobjects Wrapper
+# Shopify GraphQL Metaobjects API
 
 ## Overview
 
@@ -9,7 +9,7 @@ This npm package provides a convenient wrapper for the Shopify GraphQL Metaobjec
 To install the package, use npm:
 
 ```bash
-npm install metaobjects-orm
+npm install @shopyos/metaobjects-orm
 ```
 
 ## Usage
@@ -86,7 +86,7 @@ After creating the schema file, you can import the `installAppSchema` or `uninst
 ### Create or update entries
 ```javascript
 import {Metaobject} from "metaobjects-orm/dist/Metaobject";
-import {metaobject} from "metaobjects-orm";
+import {metaobject} from "@shopyos/metaobjects-orm";
 
 export class GroupCreator {
   public async execute(
@@ -110,7 +110,7 @@ export class GroupCreator {
 
 ### Delete entries
 ```javascript
-import {metaobject} from "metaobjects-orm";
+import {metaobject} from "@shopyos/metaobjects-orm";
 export class Delete {
   public async delete(id: string, shop: string, token: string): Promise<void> {
     const object = await metaobject.manager.get(shop, token, id, 'my_type');
@@ -121,7 +121,7 @@ export class Delete {
 
 ### Fetching entries
 ```javascript
-import {metaobject} from "metaobjects-orm";
+import {metaobject} from "@shopyos/metaobjects-orm";
 
 type MyInterface = {
   id: string;
