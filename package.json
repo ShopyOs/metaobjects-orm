@@ -1,6 +1,6 @@
 {
   "name": "@shopyos/metaobjects-orm",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "license": "MIT",
   "author": "ShopyOS",
   "main": "dist/index.js",
