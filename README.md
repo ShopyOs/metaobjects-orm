@@ -75,17 +75,18 @@ To use the package, first you need to create a new file in the root of your proj
 
 ### Schema installation
 
-After creating the schema file, you can import the `installAppSchema` or `uninstallAppSchema` to run the installation
+After creating the schema file, you can import the `metaobject` global object to run the installation
 
   ```javascript
-  import { installAppSchema } from 'metaobjects-orm';
+  import { metaobject } from '@shopyos/metaobjects-orm';
 
-  installAppSchema(shop, token);
+  metaobject.schema.install(shop, token);
+  metaobject.schema.uninstall(shop, token);
   ```
 
 ### Create or update entries
 ```javascript
-import {Metaobject} from "metaobjects-orm/dist/Metaobject";
+import {Metaobject} from "@shopyos/metaobjects-orm/dist/Metaobject";
 import {metaobject} from "@shopyos/metaobjects-orm";
 
 export class GroupCreator {
