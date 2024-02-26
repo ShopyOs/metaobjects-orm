@@ -1,0 +1,62 @@
+{
+  "name": "metaobjects-orm",
+  "version": "0.1.1",
+  "license": "MIT",
+  "author": "Cristian Sanclemente",
+  "main": "dist/index.js",
+  "module": "dist/metaobjects-orm.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "dts lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "size-limit": [
+    {
+      "path": "dist/metaobjects-orm.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/metaobjects-orm.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^11.0.2",
+    "@tsconfig/recommended": "^1.0.3",
+    "dts-cli": "^2.0.4",
+    "husky": "^9.0.11",
+    "size-limit": "^11.0.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@shopify/graphql-client": "^0.10.0",
+    "@shopify/shopify-api": "^9.3.2"
+  }
+}
