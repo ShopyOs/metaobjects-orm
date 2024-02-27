@@ -23,6 +23,9 @@ jobs:
           registry-url: https://registry.npmjs.org/
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
+
+      - name: '⚙️ installing dependencies'
+        run: npm ci
           
       - name: '🚀 publish to npmjs.org registry'
         run: npm publish --access public
