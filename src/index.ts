@@ -57,9 +57,9 @@ export const metaobject = {
       shop: string,
       token: string,
       type: string,
-      cursor: string|null,
-      direction: string|null,
-      offset: number|null
+      cursor?: string|null,
+      direction?: string|null,
+      offset?: number|null
     ): Promise<MetaobjectResponse> {
       const repository = new MetaobjectRepository(shop, token);
       return await repository.list(type, cursor, direction, offset);
