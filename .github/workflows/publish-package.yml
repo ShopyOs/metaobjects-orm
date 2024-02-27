@@ -1,9 +1,12 @@
 name: "🚀 Publish NPM Package"
 
 on:
+# Uncomment to work with releases
+#  release:
+#    types: [published]
   push:
     branches:
-      - 'main'
+      - 'master'
 
 jobs:
   publish-npm:
