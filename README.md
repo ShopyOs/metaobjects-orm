@@ -133,7 +133,7 @@ type MyInterface = {
 export class Find {
   public async findAll(shop: string, token: string): Promise<MyInterface[]> {
     const metaobjectList = await metaobject.manager.list(shop, token, 'my_type');
-    return metaobjectList?.map((object) => {
+    return metaobjectList.data?.map((object) => {
       return {
         id: object.handle,
         resource: object.id,
