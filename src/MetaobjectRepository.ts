@@ -2,6 +2,7 @@ import type { GraphQLClient } from "@shopify/graphql-client";
 import { createGraphQLClient } from "@shopify/graphql-client";
 import { LATEST_API_VERSION } from "@shopify/shopify-api";
 import type { Metaobject } from "./Metaobject";
+import {MetaobjectResponse} from "./MetaobjectResponse";
 
 export class MetaobjectRepository {
 
@@ -34,22 +35,39 @@ export class MetaobjectRepository {
     );
   }
 
-  public async list(type: string): Promise<Metaobject[]> {
+  public async list(
+    type: string,
+    cursor: string|null = null,
+    direction: string|null = 'next',
+    offset: number|null = 10
+  ): Promise<MetaobjectResponse> {
     const { data } = await this.client.request(
-      this.LIST_METAOBJECTS,
+      this.LIST_METAOBJECTS_PAGINATED,
       {
         variables: {
-          type: type
+          type,
+          first: ('next' === direction) ? offset : null,
+          last: ('prev' === direction) ? offset : null,
+          after: ('next' === direction) ? cursor : null,
+          before: ('prev' === direction) ? cursor : null
         }
       }
     );
-    return data?.metaobjects?.edges.map((edge: any) => {
-      return {
-        id: edge.node.id,
-        handle: edge.node.handle,
-        fields: edge.node.fields
-      };
-    }) ?? [];
+    return {
+      data: data?.metaobjects?.edges.map((edge: any) => {
+        return {
+          id: edge.node.id,
+          handle: edge.node.handle,
+          fields: edge.node.fields
+        };
+      }) ?? [],
+      pagination:  {
+        startCursor: data?.metaobjects?.pageInfo.startCursor,
+        endCursor: data?.metaobjects?.pageInfo.endCursor,
+        hasNextPage: data?.metaobjects?.pageInfo.hasNextPage,
+        hasPreviousPage: data?.metaobjects?.pageInfo.hasPreviousPage
+      }
+    };
   }
 
   public async get(handle: string, type: string): Promise<Metaobject|null> {
@@ -135,9 +153,9 @@ export class MetaobjectRepository {
     }
   `;
 
-  LIST_METAOBJECTS: string = `
-    query ListMetaobjects ($type: String!) {
-      metaobjects(type: $type, first: 10) {
+  LIST_METAOBJECTS_PAGINATED: string = `
+    query ListMetaobjects ($type: String!, $first: Int, $last: Int, $after: String, $before: String) {
+      metaobjects(type: $type, first: $first, last: $last, after: $after, before: $before) {
         edges {
           node {
             handle,
@@ -147,6 +165,12 @@ export class MetaobjectRepository {
               value
             }
           }
+        },
+        pageInfo {
+          startCursor,
+          hasNextPage,
+          endCursor,
+          hasPreviousPage
         }
       }
     }
