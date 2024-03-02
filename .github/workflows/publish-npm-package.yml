@@ -1,0 +1,60 @@
+name: "🚀 Publish NPM Package"
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: 'Release type to be published [major | minor | patch]'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+env:
+  node_version: 18
+  
+concurrency: # prevent concurrent releases
+  group: publish-npm-package
+  cancel-in-progress: true
+
+jobs:
+  publish-npm:
+    name: '🚀 publish'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: '📚 checkout repository'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: '🟢 setup node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+          registry-url: https://registry.npmjs.org/
+
+      - name: '⚙️ installing dependencies'
+        run: npm ci
+
+      - name: Git configuration
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: 'Bump the package version'
+        run: npm version ${{ github.event.inputs.release-type }}
+
+      - name: 'Commit new version to git'
+        run: |
+          git show
+          git push --tags
+          
+      - name: '🚀 publish to npmjs.org registry'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
