@@ -3,6 +3,13 @@
   "version": "0.2.2",
   "license": "MIT",
   "author": "ShopyOS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShopyOs/metaobjects-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ShopyOs/metaobjects-orm/issues"
+  },
   "main": "dist/index.js",
   "module": "dist/metaobjects-orm.esm.js",
   "typings": "dist/index.d.ts",
@@ -34,7 +41,7 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": ">=12"
+    "node": "^18 || ^20"
   },
   "size-limit": [
     {
