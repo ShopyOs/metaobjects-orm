@@ -43,15 +43,20 @@ jobs:
       - name: '⚙️ installing dependencies'
         run: npm ci
 
+      - name: 'Configure Git access'
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions[bot]@github.com
+
       - name: 'Bump the package version'
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
         run: npm version ${{ github.event.inputs.release-type }}
 
       - name: 'Commit new version to git'
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
         run: |
-          git config user.name github-actions
-          git config user.email github-actions[bot]@github.com
           git show
           git push --follow-tags
           
