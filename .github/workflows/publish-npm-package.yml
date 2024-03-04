@@ -15,6 +15,7 @@ on:
 
 env:
   node_version: 18
+  target_branch: 'master'
   
 concurrency: # prevent concurrent releases
   group: publish-npm-package
@@ -31,6 +32,7 @@ jobs:
       - name: '📚 checkout repository'
         uses: actions/checkout@v4
         with:
+          ref: ${{ env.target_branch }}
           fetch-depth: 0
           token: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
 
@@ -54,7 +56,7 @@ jobs:
       - name: 'Commit new version to git'
         run: |
           git show
-          git push --follow-tags
+          git push origin ${{ env.target_branch }} --follow-tags
           
       - name: '🚀 publish to npmjs.org registry'
         run: npm publish --access public
