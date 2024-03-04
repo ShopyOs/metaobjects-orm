@@ -24,13 +24,15 @@ jobs:
   publish-npm:
     name: '🚀 publish'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
 
     steps:
       - name: '📚 checkout repository'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: false
 
       - name: '🟢 setup node'
         uses: actions/setup-node@v4
@@ -43,18 +45,27 @@ jobs:
 
       - name: Git configuration
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: 'Bump the package version'
         run: npm version ${{ github.event.inputs.release-type }}
 
       - name: 'Commit new version to git'
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
         run: |
           git show
-          git push --tags
+          git push --follow-tags
           
       - name: '🚀 publish to npmjs.org registry'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
+
+      - name: 'Create Release in repository'
+        run: |
+          echo "RELEASE_TAG=$(git describe --tags $(git rev-list --tags --max-count=1)"
+          gh release create ${{ env.RELEASE_TAG }} --latest --verify-tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
