@@ -63,7 +63,7 @@ jobs:
 
       - name: 'Create Release in repository'
         run: |
-          RELEASE_TAG=$(git describe --tags $(git rev-list --tags --max-count=1)
+          RELEASE_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
           gh release create $RELEASE_TAG --latest --verify-tag
         env:
           GH_TOKEN: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
