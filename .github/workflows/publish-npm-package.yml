@@ -26,13 +26,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      id-token: write
 
     steps:
       - name: '📚 checkout repository'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
 
       - name: '🟢 setup node'
         uses: actions/setup-node@v4
@@ -43,17 +43,15 @@ jobs:
       - name: '⚙️ installing dependencies'
         run: npm ci
 
-      - name: Git configuration
+      - name: 'Configure Git access'
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name github-actions
+          git config --global user.email github-actions[bot]@github.com
 
       - name: 'Bump the package version'
         run: npm version ${{ github.event.inputs.release-type }}
 
       - name: 'Commit new version to git'
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
         run: |
           git show
           git push --follow-tags
@@ -65,7 +63,7 @@ jobs:
 
       - name: 'Create Release in repository'
         run: |
-          echo "RELEASE_TAG=$(git describe --tags $(git rev-list --tags --max-count=1)"
-          gh release create ${{ env.RELEASE_TAG }} --latest --verify-tag
+          RELEASE_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+          gh release create $RELEASE_TAG --latest --verify-tag
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.BOT_GITHUB_ACCESS_TOKEN }}
