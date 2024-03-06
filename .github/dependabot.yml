@@ -10,6 +10,7 @@ updates:
       interval: "weekly"
   # Keep npm dependencies up to date
   - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "weekly"
     groups:
