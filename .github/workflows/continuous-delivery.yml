@@ -13,9 +13,9 @@ on:
           - minor
           - patch
 
-env:
-  node_version: '18'
-  release_target_branch: 'master'
+#env: # environment variables cannot be used in reusable workflows.
+#  node_version:
+#  release_target_branch:
 
 concurrency: # prevent concurrent releases
   group: publish-npm-package
@@ -26,7 +26,7 @@ jobs:
     name: "🚀 Publish NPM Package"
     uses: shopyos/github-workflows/.github/workflows/continuous-delivery.yml@main
     with:
-        node_version: ${{ env.node_version }}
-        release_target_branch: ${{ env.target_branch }}
+        node_version: '18'
+        release_target_branch: 'master'
         release_type: ${{ github.event.inputs.release_type }}
     secrets: inherit
