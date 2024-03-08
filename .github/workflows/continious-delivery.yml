@@ -1,0 +1,32 @@
+name: "🚀 Publish NPM Package"
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release type to be published [major | minor | patch]'
+        type: choice
+        required: true
+        default: 'patch'
+        options:
+          - major
+          - minor
+          - patch
+
+env:
+  node_version: '18'
+  release_target_branch: 'master'
+
+concurrency: # prevent concurrent releases
+  group: publish-npm-package
+  cancel-in-progress: true
+
+jobs:
+  publish-npm:
+    name: "Release NPM Packages"
+    uses: shopyos/github-workflows/.github/workflows/continuous-delivery.yml@main
+    with:
+        release_target_branch: ${{ github.event.inputs.release_target_branch }}
+        node_version: ${{ env.node_version }}
+        target_branch: ${{ env.target_branch }}
+    secrets: inherit
