@@ -18,4 +18,6 @@ jobs:
     with:
       node_versions: "['18.x', '20.x']"
       os: "['ubuntu-latest', 'windows-latest', 'macOS-latest']"
+      fail-fast: false
+      timeout: 20
     secrets: inherit
