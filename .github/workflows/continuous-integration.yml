@@ -14,6 +14,6 @@ jobs:
     name: 'Continuous Integration'
     uses: shopyos/github-workflows/.github/workflows/continuous-integration.yml@main
     with:
-      node: "['18.x', '20.x']"
+      node_versions: "['18.x', '20.x']"
       os: "['ubuntu-latest', 'windows-latest', 'macOS-latest']"
     secrets: inherit
