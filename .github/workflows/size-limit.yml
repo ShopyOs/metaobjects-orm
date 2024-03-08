@@ -1,6 +1,7 @@
 name: "Size Limit"
 
-on: [pull_request]
+on:
+  pull_request:
 
 permissions:
   pull-requests: write
