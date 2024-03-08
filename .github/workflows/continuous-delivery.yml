@@ -1,4 +1,4 @@
-name: "🚀 Publish NPM Package"
+name: "Continuous Delivery"
 
 on:
   workflow_dispatch:
@@ -23,10 +23,10 @@ concurrency: # prevent concurrent releases
 
 jobs:
   publish-npm:
-    name: "Release NPM Packages"
+    name: "🚀 Publish NPM Package"
     uses: shopyos/github-workflows/.github/workflows/continuous-delivery.yml@main
     with:
-        release_target_branch: ${{ github.event.inputs.release_target_branch }}
         node_version: ${{ env.node_version }}
-        target_branch: ${{ env.target_branch }}
+        release_target_branch: ${{ env.target_branch }}
+        release_type: ${{ github.event.inputs.release_type }}
     secrets: inherit

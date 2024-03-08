@@ -1,0 +1,19 @@
+name: "Continuous Integration"
+
+on: [push]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+env:
+  node_version: "['18.x', '20.x']"
+  os: "['ubuntu-latest', 'windows-latest', 'macOS-latest']"
+
+jobs:
+  continous-integration:
+    name: 'Continuous Integration'
+    uses: shopyos/github-workflows/.github/workflows/continuous-integration.yml@main
+    with:
+      node: ${{ env.node_version }}
+      os: ${{ env.target_branch }}
+    secrets: inherit
