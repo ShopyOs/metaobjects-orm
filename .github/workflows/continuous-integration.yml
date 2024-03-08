@@ -4,8 +4,8 @@ on:
   push:
   workflow_dispatch:
 
-permissions:
-  contents: read # to fetch code (actions/checkout)
+#permissions:
+#  contents: read # to fetch code (actions/checkout)
 
 #env: # environment variables cannot be used in reusable workflows.
 #  node_versions:
