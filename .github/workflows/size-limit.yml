@@ -1,0 +1,13 @@
+name: "Size Limit"
+
+on:
+  pull_request:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  size-limit:
+    name: '📏 Size Limit'
+    uses: shopyos/github-workflows/.github/workflows/size-limit.yml@main
+    secrets: inherit

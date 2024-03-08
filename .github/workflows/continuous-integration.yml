@@ -1,0 +1,21 @@
+name: "Continuous Integration"
+
+on:
+  push:
+  workflow_dispatch:
+
+#env: # environment variables cannot be used in reusable workflows.
+#  node_versions:
+#  os:
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  continous-integration:
+    name: 'Continuous Integration'
+    uses: shopyos/github-workflows/.github/workflows/continuous-integration.yml@main
+    with:
+      node_versions: "['18.x', '20.x']"
+      os: "['ubuntu-latest', 'windows-latest', 'macOS-latest']"
+    secrets: inherit

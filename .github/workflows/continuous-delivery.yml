@@ -1,0 +1,32 @@
+name: "Continuous Delivery"
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release type to be published [major | minor | patch]'
+        type: choice
+        required: true
+        default: 'patch'
+        options:
+          - major
+          - minor
+          - patch
+
+#env: # environment variables cannot be used in reusable workflows.
+#  node_version:
+#  release_target_branch:
+
+concurrency: # prevent concurrent releases
+  group: publish-npm-package
+  cancel-in-progress: true
+
+jobs:
+  publish-npm:
+    name: "🚀 Publish NPM Package"
+    uses: shopyos/github-workflows/.github/workflows/continuous-delivery.yml@main
+    with:
+        node_version: '18'
+        release_target_branch: 'master'
+        release_type: ${{ github.event.inputs.release_type }}
+    secrets: inherit
