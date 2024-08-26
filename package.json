@@ -57,10 +57,10 @@
     "@size-limit/preset-small-lib": "^11.1.4",
     "@tsconfig/recommended": "^1.0.7",
     "dts-cli": "^2.0.5",
-    "husky": "^9.1.4",
+    "husky": "^9.1.5",
     "size-limit": "^11.0.2",
     "size-limit-node-esbuild": "^0.3.0",
-    "tslib": "^2.6.3",
+    "tslib": "^2.7.0",
     "typescript": "^5.5.4"
   },
   "dependencies": {
