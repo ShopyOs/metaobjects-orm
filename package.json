@@ -64,7 +64,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@shopify/graphql-client": "^0.10.3",
-    "@shopify/shopify-api": "^9.5.1"
+    "@shopify/graphql-client": "^1.1.0",
+    "@shopify/shopify-api": "^11.3.0"
   }
 }
